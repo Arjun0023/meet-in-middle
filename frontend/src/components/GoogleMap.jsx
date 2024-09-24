@@ -165,7 +165,6 @@ console.log(selectedPlace,"============PLace")
           <p>Loading map...</p>
         )}
 
-        {/* Overlay for displaying the places */}
         {showOverlay && (
           <div className="overlay">
             <div className="filter-buttons">
