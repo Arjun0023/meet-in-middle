@@ -196,43 +196,52 @@ console.log(selectedPlace,"============PLace")
         )}
   
         {showOverlay && (
-          <div className="overlay">
-            <div className="filter-buttons">
-              <button onClick={() => handleFilterClick("all")}>All</button>
-              <button onClick={() => handleFilterClick("restaurant")}>Restaurants</button>
-              <button onClick={() => handleFilterClick("cafe")}>Cafes</button>
-              <button onClick={() => handleFilterClick("shopping_mall")}>Malls</button>
-              <button onClick={() => handleFilterClick("park")}>Parks</button>
-              <button onClick={() => handleFilterClick("lodging")}>Hotels</button>
-            </div>
-            <div className="places-list">
-              {filteredPlaces.map((place, index) => (
-                <div
-                  key={index}
-                  className="place-card"
-                  onClick={() => handlePlaceSelect(place)}
-                  style={{
-                    border: selectedPlaces.includes(place) ? "2px solid blue" : "1px solid gray",
-                    padding: "10px",
-                    cursor: "pointer",
-                    backgroundColor: selectedPlaces.includes(place) ? "#f0f8ff" : "#fff",
-                  }}
-                >
-                  <h5>{place.name}</h5>
-                  <p>{place.vicinity}</p>
-                  <p>Rating: {place.rating || "N/A"}</p>
-                  {place.photos && place.photos.length > 0 && (
-                    <img
-                      src={place.photos[0].getUrl()}
-                      alt={place.name}
-                      style={{ width: "100px", height: "100px" }}
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+  <div className="overlay">
+    {/* Cross Button to Close the Overlay */}
+    <button
+      className="close-button"
+      onClick={() => setShowOverlay(false)}
+    >
+      &#x2715;
+    </button>
+
+    <div className="filter-buttons">
+      <button onClick={() => handleFilterClick("all")}>All</button>
+      <button onClick={() => handleFilterClick("restaurant")}>Restaurants</button>
+      <button onClick={() => handleFilterClick("cafe")}>Cafes</button>
+      <button onClick={() => handleFilterClick("shopping_mall")}>Malls</button>
+      <button onClick={() => handleFilterClick("park")}>Parks</button>
+      <button onClick={() => handleFilterClick("lodging")}>Hotels</button>
+    </div>
+
+    <div className="places-list">
+      {filteredPlaces.map((place, index) => (
+        <div
+          key={index}
+          className="place-card"
+          onClick={() => handlePlaceSelect(place)}
+          style={{
+            border: selectedPlaces.includes(place) ? "2px solid blue" : "1px solid gray",
+            padding: "10px",
+            cursor: "pointer",
+            backgroundColor: selectedPlaces.includes(place) ? "#f0f8ff" : "#fff",
+          }}
+        >
+          <h5>{place.name}</h5>
+          <p>{place.vicinity}</p>
+          <p>Rating: {place.rating || "N/A"}</p>
+          {place.photos && place.photos.length > 0 && (
+            <img
+              src={place.photos[0].getUrl()}
+              alt={place.name}
+              style={{ width: "100px", height: "100px" }}
+            />
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+)}
   
         {/* Invite Guests Button */}
         {selectedPlaces.length > 0 && (

@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors'); // Import the CORS package
 const authRoutes = require('./routes/authRoutes');
+const smsRoutes = require('./routes/smsRoutes');
 
 const app = express();
 
@@ -12,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
-
+app.use('/api/sms', smsRoutes);
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true, 
     useUnifiedTopology: true
