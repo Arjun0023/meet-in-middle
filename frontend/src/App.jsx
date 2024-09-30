@@ -5,6 +5,7 @@ import Signin from './pages/signin';
 import OtpVerification from './pages/otpVerification';
 import Home from './pages/home';
 import { useState } from 'react'
+import InvitePage from './pages/invitePage';
 import './App.css'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       <Route path="/" element={<Signin />} />
       <Route path="/otpVerification" element={<OtpVerification />} />
       <Route path="/home" element={<Home />} />
+      <Route path="/invitepage" element={<InvitePage />} />
     </Routes>
    </Router>
   )

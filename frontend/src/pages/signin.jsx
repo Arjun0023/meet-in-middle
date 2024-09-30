@@ -13,7 +13,7 @@ const Signin = () => {
     const handleSignin = async(e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:5001/api/signin', {
+            const response = await fetch('http://localhost:5001/api/auth/signin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -37,32 +37,37 @@ const Signin = () => {
     };
 
     return (
-        <div className="Signin-main">
-            <h2>Signin</h2>
-            <form onSubmit = {handleSignin}>
-                <input
-                type="email"
-                name="email" 
-                value={formData.email}
-                onChange = {handleInputChange}
-                placeholder="Email"
-                /> 
-               
-                <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange = {handleInputChange}
-                placeholder="Password"
-                />
-                <button type="Submit">
-                    Signin
-                </button>
-    
-            </form>
-          
+        <div className="signin-container">
+            <div className="left-section">
+                <div className="quote-box">
+                    <p>"There's always room at the top for the best."</p>
+                    <span>- John Henry Patterson</span>
+                </div>
+            </div>
+            <div className="right-section">
+                <div className="Signin-main">
+                    <h2>Sign In</h2>
+                    <form onSubmit={handleSignin}>
+                        <input
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            placeholder="Email"
+                        />
+                        <input
+                            type="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleInputChange}
+                            placeholder="Password"
+                        />
+                        <button type="Submit">Sign In</button>
+                    </form>
+                </div>
+            </div>
         </div>
-      );
-    }
-    
-    export default Signin;
+    );
+};
+
+export default Signin;

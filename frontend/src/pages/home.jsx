@@ -7,7 +7,7 @@ import MapContainer from "../components/GoogleMap";
 const Home = () => {
     return (
         <div className="home">
-            <h1>Welcome to my website</h1>
+            <h1>Welcome to Meet in the middle</h1>
             <MapContainer/>
         </div>
         );

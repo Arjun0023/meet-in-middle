@@ -6,7 +6,9 @@ import {
   LoadScript,
   InfoWindow,
 } from "@react-google-maps/api";
-//
+import { useNavigate } from "react-router-dom";
+import './maps.css'
+
 const MapContainer = () => {
   const [userLocation, setUserLocation] = useState(null);
   const [secondLocation, setSecondLocation] = useState(null);
@@ -18,6 +20,9 @@ const MapContainer = () => {
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [selectedType, setSelectedType] = useState("all"); // To filter places by type
   const [showOverlay, setShowOverlay] = useState(false); // Toggle the overlay
+  const [selectedPlaces, setSelectedPlaces] = useState([]);; // For storing selected places
+  const [selectedPlaceCard, setSelectedPlaceCard] = useState(null);
+
 console.log(selectedType,"---------SelectedType")
 console.log(selectedPlace,"============PLace")
   // Fetch the user's location when the component mounts
@@ -74,6 +79,37 @@ console.log(selectedPlace,"============PLace")
     }
   };
 
+
+  const navigate = useNavigate(); // useNavigate hook for navigation
+
+  const handlePlaceSelect = (place) => {
+    if (selectedPlaces.includes(place)) {
+      // Deselect place if it's already selected
+      setSelectedPlaces(selectedPlaces.filter((p) => p !== place));
+    } else if (selectedPlaces.length < 5) {
+      // Add place to the array if not selected yet and limit is not reached
+      setSelectedPlaces([...selectedPlaces, place]);
+    } else {
+      alert("You can select up to 5 places only.");
+    }
+  };
+  
+  // Function to handle navigation to the invite page
+  const handleInviteGuests = () => {
+    if (selectedPlaces.length > 0) {
+      const simpleSelectedPlaces = selectedPlaces.map(place => ({
+        name: place.name,
+        vicinity: place.vicinity,
+        rating: place.rating || "N/A",
+        // Add other properties you need, avoiding non-serializable properties
+      }));
+      
+      navigate('/invitepage', { state: { selectedPlaces: simpleSelectedPlaces } });
+    } else {
+      alert("Please select at least one place to invite guests.");
+    }
+  };
+  
   // Function to search nearby places based on the selected type
   const searchNearbyPlaces = (location, placeType = "restaurant") => {
     const map = new window.google.maps.Map(document.createElement("div"));
@@ -107,10 +143,7 @@ console.log(selectedPlace,"============PLace")
   const mapStyles = { width: "100%", height: "400px" };
 
   return (
-    <LoadScript
-      googleMapsApiKey="AIzaSyC07FUPydZqWCczGNbWP_jhLSujSiNVJiU"
-      libraries={["places"]}
-    >
+    <LoadScript googleMapsApiKey="AIzaSyC07FUPydZqWCczGNbWP_jhLSujSiNVJiU" libraries={["places"]}>
       <div>
         {error && <p>{error}</p>}
         <div>
@@ -123,18 +156,15 @@ console.log(selectedPlace,"============PLace")
               style={{ width: "100%", padding: "10px" }}
             />
           </Autocomplete>
-          <button
-            onClick={calculateMidpoint}
-            style={{ marginTop: "10px", padding: "10px" }}
-          >
+          <button onClick={calculateMidpoint} style={{ marginTop: "10px", padding: "10px" }}>
             Submit
           </button>
         </div>
-
+  
         {/* Only render the map when userLocation is available */}
         {userLocation ? (
           <GoogleMap
-            mapContainerStyle={mapStyles}
+            mapContainerStyle={{ width: "100%", height: "400px" }}
             zoom={12}
             center={midpoint || userLocation}
           >
@@ -164,24 +194,30 @@ console.log(selectedPlace,"============PLace")
         ) : (
           <p>Loading map...</p>
         )}
-
+  
         {showOverlay && (
           <div className="overlay">
             <div className="filter-buttons">
               <button onClick={() => handleFilterClick("all")}>All</button>
-              <button onClick={() => handleFilterClick("restaurant")}>
-                Restaurants
-              </button>
+              <button onClick={() => handleFilterClick("restaurant")}>Restaurants</button>
               <button onClick={() => handleFilterClick("cafe")}>Cafes</button>
-              <button onClick={() => handleFilterClick("shopping_mall")}>
-                Malls
-              </button>
+              <button onClick={() => handleFilterClick("shopping_mall")}>Malls</button>
               <button onClick={() => handleFilterClick("park")}>Parks</button>
               <button onClick={() => handleFilterClick("lodging")}>Hotels</button>
             </div>
             <div className="places-list">
               {filteredPlaces.map((place, index) => (
-                <div key={index} className="place-card">
+                <div
+                  key={index}
+                  className="place-card"
+                  onClick={() => handlePlaceSelect(place)}
+                  style={{
+                    border: selectedPlaces.includes(place) ? "2px solid blue" : "1px solid gray",
+                    padding: "10px",
+                    cursor: "pointer",
+                    backgroundColor: selectedPlaces.includes(place) ? "#f0f8ff" : "#fff",
+                  }}
+                >
                   <h5>{place.name}</h5>
                   <p>{place.vicinity}</p>
                   <p>Rating: {place.rating || "N/A"}</p>
@@ -196,6 +232,23 @@ console.log(selectedPlace,"============PLace")
               ))}
             </div>
           </div>
+        )}
+  
+        {/* Invite Guests Button */}
+        {selectedPlaces.length > 0 && (
+          <button
+            onClick={handleInviteGuests}
+            style={{
+              marginTop: "20px",
+              padding: "10px 20px",
+              backgroundColor: "#4CAF50",
+              color: "white",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            Invite Guests
+          </button>
         )}
       </div>
     </LoadScript>

@@ -1,0 +1,83 @@
+/* Main container */
+.signin-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw; /* Ensure it takes up the full viewport width */
+    margin: 0; /* Remove any unwanted margins */
+    padding: 0; /* Remove any unwanted padding */
+    background-color: rgb(255, 255, 255);
+    box-sizing: border-box; /* Ensure padding doesn't add extra width */
+}
+/* Left section for the slogan and background */
+.left-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e0e0e0; /* Gray background */
+    padding: 20px;
+}
+
+/* Styling the quote box */
+.quote-box {
+    text-align: center;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.quote-box p {
+    font-style: italic;
+    font-weight: bold;
+}
+
+.quote-box span {
+    display: block;
+    margin-top: 10px;
+    font-size: 1.2em;
+}
+
+/* Right section for the sign-in form */
+.right-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Signin form styling */
+.Signin-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+    padding: 40px;
+    border-radius: 10px;
+    border: #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.Signin-main h2 {
+    margin-bottom: 20px;
+}
+
+.Signin-main input {
+    width: 100%;
+    padding: 10px;
+    background-color: #e0e0e0;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.Signin-main button {
+    padding: 10px 20px;
+    background-color: rgb(0, 0, 0);
+    color: rgb(237, 237, 237);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.Signin-main button:hover {
+    background-color: #333;
+}
